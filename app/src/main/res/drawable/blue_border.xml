@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <storake
-        android:with="1dp"
+        android:width="1dp"
         android:color="@color/blue"/>
 
     <corners
