@@ -1,5 +1,6 @@
 package com.example.notesapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -41,9 +42,22 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         }
 
         holder.deleteButton.setOnClickListener {
-            db.deleteNote(note.id)
-            refreshData(db.getAllNotes())
-            Toast.makeText(holder.itemView.context, "Note Deleted", Toast.LENGTH_SHORT).show()
+            AlertDialog.Builder(holder.itemView.context).apply {
+                setTitle("Confirmation")
+                setMessage("Do you want to continue?")
+                setIcon(R.drawable.baseline_delete_24)
+
+                setPositiveButton("Yes"){dialogInterface, i ->
+                    db.deleteNote(note.id)
+                    refreshData(db.getAllNotes())
+                    Toast.makeText(holder.itemView.context, "Note Deleted", Toast.LENGTH_SHORT).show()
+                    dialogInterface.dismiss()
+                }
+
+                setNegativeButton("Cancel"){dialogInterface, i->
+                    dialogInterface.dismiss()
+                }
+            }.show()
         }
     }
 
